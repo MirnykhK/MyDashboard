@@ -1,8 +1,43 @@
 <resources>
     <string name="app_name">MyDashboard</string>
-    <string name="connectButton">Подключиться</string>
-    <string name="serverLabel">Адрес сервера:</string>
-    <string name="loginLabel">Логин:</string>
-    <string name="passwordLabel">Пароль:</string>
-    <string name="idLabel">ID:</string>
+    <string name="connect_button">Подключиться</string>
+    <string name="connect_button_stop">Остановить подключение</string>
+    <string name="server_label">Адрес сервера:</string>
+    <string name="database_label">Имя базы:</string>
+    <string name="login_label">Логин:</string>
+    <string name="password_label">Пароль:</string>
+    <string name="id_label">ID:</string>
+    <string name="app_name_login">подключение</string>
+    <string name="app_name_login_in_progress">подключение (в процессе…)</string>
+    <string name="app_name_loged_in">показатели</string>
+    <string name="app_name_settings">настройки</string>
+    <string name="server_adress_error">адрес сервера не заполнен</string>
+    <string name="data_base_error">имя базы не заполрнено</string>
+    <string name="login_error">логин не заполнен</string>
+    <string name="password_error">пароль не заполнен</string>
+    <string name="id_error">индентификатор не заполнен</string>
+    <string name="web_error">Отсутсвует подключение к интернету</string>
+    <string name="menu_settings">Настройки</string>
+    <string name="menu_update">Обновить</string>
+    <string name="menu_stop">Остановить</string>
+    <string name="menu_back">Вернуться</string>
+    <string name="order_of_data">Показатели</string>
+    <string name="empty_order_settings">Показатели еще не загружались</string>
+    <string name="app_settings">Общие настройки</string>
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <string name="default_notification_channel_name" translatable="true">Сообщения дашборда</string>
+    <string name="default_notification_channel_description">Канал для обмена данными с дашбордом</string>
+    <string name="message_subscribed">Связь с сервером установлена</string>
+    <string name="message_subscribe_failed">Ошибка установки связи с сервером</string>
+    <string name="title_indicator_name">Название показателя</string>
+    <string name="title_indicator_is_visible">Виден</string>
+    <string name="new_indicators_error">Ошибка получения новых показателей: </string>
+    <string name="existed_indicators_error">Ошибка загрузки показателей: </string>
+    <string name="new_indicators_sign">Обнаружено новых индикаторов: </string>
+    <string name="is_visible_indicator_error">Ошибка записи состояния индикатора: </string>
+    <string name="settings_autologin">Автоматически подключаться при запуске приложения</string>
+    <string name="settings_notification_mode">Режим уведомлений в онлайн режиме:</string>
+    <string name="settings_notification_silent">бесшумный</string>
+    <string name="settings_notification_sound">звуковой сигнал</string>
+    <string name="settings_notification_vibrate">вибро</string>
 </resources>

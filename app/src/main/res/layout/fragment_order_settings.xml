@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.SettingsUI.OrderSettingsFragment">
+
+    <TextView
+        android:id="@+id/textViewEmptyOrderSettings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:visibility="gone"
+        android:layout_below="@+id/title_of_order"
+        android:text="@string/empty_order_settings" />
+
+    <include
+        android:id="@+id/title_of_order"
+        layout="@layout/indicator_order_title_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title_of_order">
+
+    </androidx.recyclerview.widget.RecyclerView>
+</RelativeLayout>

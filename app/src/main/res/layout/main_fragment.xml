@@ -5,21 +5,25 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/backrepeat"
     android:orientation="vertical"
-    tools:context=".ui.main.MainFragment"
-    android:background="@drawable/backrepeat">
+    android:padding="4dp"
+    tools:context=".ui.MainFragment">
+
+
 
     <TableLayout
         android:id="@+id/tableLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="12dp"
+        android:background="@color/design_default_color_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.32999998"
-        android:background="@color/design_default_color_background">
+        app:layout_constraintVertical_bias="0.32999998">
+
 
         <TableRow
             android:layout_width="match_parent"
@@ -29,15 +33,36 @@
                 android:id="@+id/textViewServer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/serverLabel" />
+                android:fontFamily="@font/roboto"
+                android:text="@string/server_label" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName6"
+                android:id="@+id/editTextServerAdress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:importantForAutofill="no" />
+                android:importantForAutofill="no"
+                android:inputType="textPersonName" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="48dp">
+
+            <TextView
+                android:id="@+id/textViewDataBase"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:text="@string/database_label" />
+
+            <EditText
+                android:id="@+id/editTextDataBase"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:importantForAutofill="no"
+                android:inputType="textPersonName" />
         </TableRow>
 
         <TableRow
@@ -48,15 +73,16 @@
                 android:id="@+id/textViewLogin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/loginLabel" />
+                android:fontFamily="@font/roboto"
+                android:text="@string/login_label" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName7"
+                android:id="@+id/editTextLogin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:importantForAutofill="no" />
+                android:importantForAutofill="no"
+                android:inputType="textPersonName" />
         </TableRow>
 
         <TableRow
@@ -67,15 +93,16 @@
                 android:id="@+id/textViewPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/passwordLabel" />
+                android:fontFamily="@font/roboto"
+                android:text="@string/password_label" />
 
             <EditText
-                android:id="@+id/editTextTextPassword"
+                android:id="@+id/editTextPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPassword"
-                android:importantForAutofill="no" />
+                android:importantForAutofill="no"
+                android:inputType="textPassword" />
         </TableRow>
 
         <TableRow
@@ -86,27 +113,71 @@
                 android:id="@+id/textViewID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/idLabel" />
+                android:fontFamily="@font/roboto"
+                android:text="@string/id_label" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName8"
+                android:id="@+id/editTextID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:importantForAutofill="no" />
+                android:importantForAutofill="no"
+                android:inputType="textPersonName" />
         </TableRow>
     </TableLayout>
 
-    <Button
-        android:id="@+id/loginButton"
-        style="@style/Widget.AppCompat.Button"
+    <FrameLayout
+        android:id="@+id/buttonFrame"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/connectButton"
+        android:layout_height="72dp"
+        android:background="@color/design_default_color_background"
+        android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.547"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_gravity="top|center_horizontal"
+            android:visibility="gone"
+            android:indeterminate="true"
+            android:max="100"
+            android:progress="65"
+            android:progressDrawable="@drawable/circular_progress_bar" />
+
+        <ImageButton
+            android:id="@+id/loginButton"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_gravity="top|center_horizontal"
+            android:background="@drawable/ic_power_on"
+            android:clickable="true"
+            android:padding="4dp" />
+
+        <TextView
+            android:id="@+id/loginButtonTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:fontFamily="@font/roboto"
+            android:text="@string/connect_button" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/textViewError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginBottom="4dp"
+        android:fontFamily="@font/roboto"
+        android:text="TextView"
+        android:textColor="@color/red_700"
+        android:textSize="12dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
