@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">MyDashboard</string>
+    <string name="connectButton">Подключиться</string>
+    <string name="serverLabel">Адрес сервера:</string>
+    <string name="loginLabel">Логин:</string>
+    <string name="passwordLabel">Пароль:</string>
+    <string name="idLabel">ID:</string>
+</resources>
