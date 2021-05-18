@@ -172,7 +172,8 @@ class OrderSettingsFragment : Fragment() {
 
         init {
             checkBoxIsVisible.setOnClickListener {
-                subjectClicksIsVisible.onNext(adapter.listOfIndicators[this.absoluteAdapterPosition])
+                val updatedIndicator = communicationViewModel.setIsVisibleConsistencyUpdateToUI(adapter.listOfIndicators, this.absoluteAdapterPosition)
+                subjectClicksIsVisible.onNext(updatedIndicator)
             }
         }
 
@@ -195,7 +196,6 @@ class OrderSettingsFragment : Fragment() {
         ItemTouchHelperAdapter, RecyclerView.Adapter<IndicatorViewHolder>() {
         private val compositeSubscription = CompositeDisposable()
         private val subjectListOfIndicators = PublishSubject.create<List<OrderEntity>>()
-//        private val subjectOnMove = PublishSubject.create<Unit>()
 
         private val actionOnNextOnIndicatorUpdateMessage: (it: OnIndicatorUpdateMessage) -> Unit = {
             it.error?.let {
@@ -219,6 +219,9 @@ class OrderSettingsFragment : Fragment() {
         fun getListOfIndicatorsObservable() = subjectListOfIndicators.hide()
 
         fun onMoveEnd() {
+            val updatedList = communicationViewModel.setOrderConsistencyUpdateToUI(listOfIndicators)
+            listOfIndicators.clear()
+            listOfIndicators.addAll(updatedList)
             subjectListOfIndicators.onNext(listOfIndicators)
         }
 
@@ -261,8 +264,8 @@ class OrderSettingsFragment : Fragment() {
             listOfUnvalidatedOrderEntities?.let {
                 if (it.contains(curOrderEntity)) {
 
-                    markAndUpdateNewIndicator(holder, curOrderEntity, position)
-
+                    val updatedIndicator = markAndUpdateNewIndicator(holder, curOrderEntity, position)
+                    listOfIndicators[position] =  updatedIndicator
                     it.remove(curOrderEntity)
                 }
             }
@@ -280,12 +283,9 @@ class OrderSettingsFragment : Fragment() {
                 }
             }
 
-            val isVisibleStateObservable = RxCompoundButton.checkedChanges(holder.checkBoxIsVisible)
-
 
             val subscription = communicationViewModel.getUpdateIsVisibleIndicatorObservable(
-                holder.getClickIsVisibleObservable(),
-                isVisibleStateObservable
+                holder.getClickIsVisibleObservable()
             )
                 .subscribe(
                     actionOnNextOnIndicatorUpdateMessage,
@@ -343,11 +343,13 @@ class OrderSettingsFragment : Fragment() {
         holder: IndicatorViewHolder,
         indicator: OrderEntity,
         index: Int
-    ) {
+    ):OrderEntity  {
         blink(holder)
 
+        val updatedIndicator = communicationViewModel.setIsSubmitedConsistencyUpdateToUI(indicator, index)
+
         val validatedIndicatorsObservable =
-            communicationViewModel.updateValidatedIndicator(indicator, index)
+            communicationViewModel.updateValidatedIndicator(updatedIndicator, index)
         val actionOnNext: (it: Unit) -> Unit = {
             enableHolder(holder)
         }
@@ -356,6 +358,8 @@ class OrderSettingsFragment : Fragment() {
         }
         validatedDisposable = validatedIndicatorsObservable.subscribe(actionOnNext, actionOnError)
         disableHolder(holder)
+
+        return updatedIndicator
     }
 
     private fun disableHolder(holder: IndicatorViewHolder) {

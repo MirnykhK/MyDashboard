@@ -101,9 +101,6 @@ class CommunicationViewModel : ViewModel() {
                     }
                 }
 
-//                val sortedDashboardResponce = sortInputDataSet(dashboardResponce)
-//
-//                emitter.onSuccess(sortedDashboardResponce)
                 emitter.onSuccess(dashboardResponce)
             } catch (e: Exception) {
                 emitter.onError(e)
@@ -163,8 +160,7 @@ class CommunicationViewModel : ViewModel() {
     private fun createUpdateValidatedIndicatorObservable(indicator: OrderEntity, index: Int): Single<Unit> {
         return Single.create { emitter ->
             try {
-                val validatedIndicator = indicator.copy(isSubmitted = 1, orderValue = index)
-                sqlRepository.updateIndicator(validatedIndicator)
+                sqlRepository.updateIndicator(indicator)
 
                 emitter.onSuccess(Unit)
             } catch (e: Exception) {
@@ -190,10 +186,9 @@ class CommunicationViewModel : ViewModel() {
         return single.toObservable().subscribeOn(Schedulers.io())
     }
 
-    fun getUpdateIsVisibleIndicatorObservable(clickIsVisibleObservable: Observable<OrderEntity>,IsVisibleStateObservable: Observable<Boolean> ):Observable<OnIndicatorUpdateMessage>{
+    fun getUpdateIsVisibleIndicatorObservable(clickIsVisibleObservable: Observable<OrderEntity>):Observable<OnIndicatorUpdateMessage>{
 
-        return clickIsVisibleObservable.withLatestFrom(IsVisibleStateObservable,
-            {currentIndicator, isCheched -> val validatedIndicator = currentIndicator.copy(isVisible = if (isCheched) 1 else 0); validatedIndicator})
+        return clickIsVisibleObservable
             .switchMap(this::updateIndicatorAsObservable)
             .observeOn(AndroidSchedulers.mainThread())
     }
@@ -208,9 +203,8 @@ class CommunicationViewModel : ViewModel() {
         val single: Single<OnIndicatorUpdateMessage> = Single.create { emitter ->
             try {
 
-                listOfIndicators.forEachIndexed { index, orderEntity ->
-                    val orderedIndicator = orderEntity.copy(orderValue = index)
-                    sqlRepository.updateIndicator(orderedIndicator)
+                listOfIndicators.forEach {
+                    sqlRepository.updateIndicator(it)
                 }
 
                 emitter.onSuccess(OnIndicatorUpdateMessage())
@@ -223,5 +217,19 @@ class CommunicationViewModel : ViewModel() {
         return single.toObservable().subscribeOn(Schedulers.io())
     }
 
+    fun setIsVisibleConsistencyUpdateToUI(listOfIndicators: ArrayList<OrderEntity>, index: Int): OrderEntity{
+        val currIndicator = listOfIndicators[index]
+        val updatedIndicator = currIndicator.copy(isVisible = if (currIndicator.isVisible == 0) 1 else 0)
+        listOfIndicators[index] =  updatedIndicator
+        return updatedIndicator
+    }
+
+    fun setOrderConsistencyUpdateToUI(listOfIndicators: List<OrderEntity>)=
+        listOfIndicators.mapIndexed { index, orderEntity ->  orderEntity.copy(orderValue = index)}.toList()
+
+    fun setIsSubmitedConsistencyUpdateToUI(indicator: OrderEntity, index: Int): OrderEntity{
+        val updatedIndicator = indicator.copy(isSubmitted = 1, orderValue = index)
+        return updatedIndicator
+    }
 
 }
